@@ -1,34 +1,36 @@
 const path = require("path");
-const rootDir = path.dirname(require.main.filename);
+const rootdir = path.dirname(require.main.filename);
 
-exports.run = (client, options) => {
-  client.opts = {
+exports.Luxcord = function (opts) {
+  this.opts = {
     name: "luxcord",
     token: undefined,
     ownerID: undefined,
     verbose: false,
     allowBots: false,
-    masterPrefix: ".",
-    prefixes: [],
-    cmdDirectory: "./cmd",
-    evtDirectory: "./evt",
-    rootDir: rootDir,
+    prefix: "luxcord.",
+    cmddir: "./cmd/",
+    evtdir: "./evt/",
+    cfgdir: "./cfg/",
+    absdir: false,
+    rootdir: rootdir,
     modules: [],
 
-    ...options
-  }
+    ...opts
+  };
 
-  client.opts.cmdDirectory = path.join(rootDir, client.opts.cmdDirectory);
-  client.opts.evtDirectory = path.join(rootDir, client.opts.evtDirectory);
-  
+  if (!this.opts.absdir) ["cmddir", "evtdir", "cfgdir"].forEach(e => this.opts[e] = path.join(rootdir, this.opts[e]));
+
   const events = [
     "ready",
     "message"
   ];
 
-  events.forEach(e => client.on(e, require("./events/" + e + ".js").run.bind(client)));
+  events.forEach(e => this.on(e, require("./events/" + e + ".js").run.bind(this)));
 
-  require("./main/discord.js").run(client);
+  require("./main/discord.js").run(this);
   
-  client.login(client.opts.token);
+  this.login(this.opts.token);
+
+  return this;
 }

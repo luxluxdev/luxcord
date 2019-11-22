@@ -1,6 +1,6 @@
 exports.run = function () {
   this.log("---------------------------------------------------");
-  console.log(this.opts.name + " > successful login");
+  console.log(this.opts.name + " > successful login            ");
   this.log("---------------------------------------------------");
   this.log("usertag:   " + this.user.tag);
   this.log("id:        " + this.user.id);
@@ -9,6 +9,6 @@ exports.run = function () {
   this.log("users:     " + this.users.size);
   this.log("dirname:   " + __dirname);
   this.log("---------------------------------------------------");
-  this.log("                               powered by luxcord  ");
+  this.log("powered by luxcord                                 ");
   this.log("---------------------------------------------------");
 }

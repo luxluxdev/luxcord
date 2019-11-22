@@ -1,35 +1,65 @@
 # Luxcord - A simple discord.js framework
 
-Luxcord is a simple yet flexible framework for discord.js!
+Luxcord is an elegant framework for discord.js.
 
-It is currently a work in progress. Not ready for use.
+Designed with simplicity and flexibility in mind.
 
-**Example - How this package will end up being used**
+It is currently a work in progress. **Not ready for use just yet.**
 
-Example entry `/app/bot.js`:
+# Luxcord in One Line
+
+```js
+require("luxcord").init({token: "token"}).cmd("ping", msg => msg.reply("pong!"));
+```
+
+# Luxcord in One File
+
+```js
+require("luxcord")
+
+.init({
+  prefix: ".",
+  token: "token"
+})
+
+.cmd("ping", function(message) {
+  message.channel.send("pong!");
+})
+
+.evt("guildMemberAdd", function(member) {
+  member.send("Welcome to our server!");
+})
+```
+
+# Luxcord in Modules
+
+**Entry Point** `/bot.js`:
 ```js
 const luxcord = require("luxcord");
 
 let opts = {
   name: "my-amazing-bot",
-  token: "jhc6hjA568d3g.grMzE1ODQ.6Xd3cBQk77kINERgcO7u7vi3k.JiPCl9o0o",
-  ownerID: "177044577042169856",
-  verbose: false,
-  allowBots: false,
-  masterPrefix: ".",
-  cmdDirectory: "./cmd",
-  evtDirectory: "./evt",
-  cfgDirectory: "./cfg",
-  color: 0xff99ee
+  prefix: ".",
+  token: "super-secret-token"
 }
 
 luxcord.init(opts);
 ```
 
-Example command `/app/cmd/gift.js`:
+**Command Module** `/cmd/gift.js`:
 ```js
+exports.opts = {
+  name: "gift",
+  args: {
+    target: "member-optional",
+    gift: "string-join"
+  },
+  desc: "Gift someone something!",
+  subs: ["member"]
+}
+
 exports.run = function (message) {
-  let args = message.validate({target: "member-optional", gift: "string-join"}); if (!args) return;
+  let args = message.args;
   
   if (args.target.id === message.author.id) return message.channel.embed("Error", "You gifted yourself " + args.gift + "...");
   if (args.target.id === this.user.id) return message.channel.embed("Thank you!", "I appreciate it :)");
@@ -38,7 +68,7 @@ exports.run = function (message) {
 }
 ```
 
-Example event `/app/evt/channelCreate.js`:
+**Event Module** `/evt/channelCreate.js`:
 ```js
 exports.run = function (channel) {
   if (channel.type !== "text") return;
