@@ -1,3 +1,3 @@
 exports.run = (client) => {
-  client.modules = {};
+  client.addons = {};
 }

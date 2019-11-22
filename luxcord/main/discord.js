@@ -24,12 +24,15 @@ exports.run = (client) => {
       run: f
     });
 
+    client.log("command registered: " + opts.name);
+
     return client;
   }
 
   // client.evt
   client.evt = function(evt, f) {
     client.on(evt, f);
+    client.log("event registered: " + evt);
     return client;
   }
 }

@@ -32,7 +32,12 @@ exports.run = function (message) {
   // TO-DO command preprocessor
   
   let command = this.commands.get(cmd) || this.commands.getFromAlias(cmd);
-  if (command) command.run.call(this, message);
+  if (command) {
+    let cmdargs = [message];
+    if (this.opts.clientArg) cmdargs.unshift(client);
+    if (this.opts.argsArg) cmdargs.push(args);
+    else command.run.call(this, ...cmdargs);
+  }
   else console.log("command `" + cmd + "` not found");
 
   // TO-DO command postprocessor

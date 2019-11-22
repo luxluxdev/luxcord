@@ -1,7 +1,7 @@
 {
   "name": "luxcord",
-  "version": "1.0.4",
-  "description": "A simple yet flexible discord.js framework",
+  "version": "1.0.6",
+  "description": "An elegant discord.js framework",
   "main": "index.js",
   "scripts": {
     "start": "node luxcord.js",
@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "discord.js": "^11.5.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "require-all": "^3.0.0"
   },
   "engines": {
     "node": "8.x"
