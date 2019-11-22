@@ -2,7 +2,9 @@ exports.run = (client, options) => {
   client.opts = {
     name: "luxcord",
     token: undefined,
+    ownerID: undefined,
     verbose: false,
+    allowBots: false,
     masterPrefix: ".",
     cmdDirectory: "./cmd",
     evtDirectory: "./evt",

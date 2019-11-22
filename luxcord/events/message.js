@@ -1,21 +1,9 @@
 exports.run = function (message) {
-  if (message.author.bot || message.author.id == this.user.id) return;
+  let embeds = message.embeds.reduce((a,b) => a + "[embed: " + (b.title || b.author.name || b.description) + "]", "");
+  this.log("message received from " + message.author.tag + ": " + message.content + embeds);
   
-  this.log("message received from " + message.author.tag + ": " + message.content);
+  if (!this.opts.allowBots && message.author.bot) return this.log("message is from bot")
+  if (message.author.id == this.user.id) return this.log("message is from self");
   
-  /*
-  let prefix = "";
-  
-  prefixes.forEach((element) => {
-    if (message.content.toLowerCase().indexOf(element.toLowerCase()) === 0) prefix = element;
-  });
-  
-  if (prefix == "") return;
-  
-  const args = message.content.slice(prefix.length).trim().split(/ +/g);
-  const cmd = args.shift().toLowerCase();
-
-  if (!require("./cmdauth.js").auth(message, cmd)) return;
-  
-  require("../cmd/" + cmd + ".js").run(this, message, args);*/
+  if (message.content === this.opts.masterPrefix + "ping") message.reply("pong!");
 }
