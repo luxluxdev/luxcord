@@ -11,6 +11,8 @@ exports.Luxcord = function (opts) {
     clientArg: false,
     argsArg: false,
     prefix: "luxcord.",
+    scancmd: true,
+    scanevt: true,
     cmddir: "./cmd/",
     evtdir: "./evt/",
     cfgdir: "./cfg/",

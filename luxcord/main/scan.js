@@ -3,12 +3,17 @@ const fs = require("fs");
 
 exports.run = (client) => {
   let commands, events;
-  if (fs.existsSync(client.opts.cmddir)) commands = requireall(client.opts.cmddir);
-  if (fs.existsSync(client.opts.evtdir)) events = requireall(client.opts.evtdir);
+  if (client.opts.scancmd && fs.existsSync(client.opts.cmddir)) commands = requireall(client.opts.cmddir);
+  if (client.opts.scanevt && fs.existsSync(client.opts.evtdir)) events = requireall(client.opts.evtdir);
 
   for (let name in commands) {
-    f = commands[name].run
-    cmd = commands[name].opts && commands[name].opts.name || name;
+    f = commands[name].run;
+    if (!commands[name].opts) {
+      cmd = name;
+    } else {
+      commands[name].opts.name = commands[name].opts.name || name;
+      cmd = commands[name].opts;
+    }
     client.cmd(cmd, f);
   }
 

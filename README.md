@@ -1,10 +1,10 @@
 # Luxcord - An elegant discord.js framework
 
-Luxcord is an elegant framework for discord.js.
+**Luxcord v1.0.7** - `npm i luxcord` - [npm][1] [github][2]
 
 Designed with simplicity and flexibility in mind.
 
-It is currently a work in progress. **Not ready for use just yet.**
+Currently a work in progress. **Not ready for public use just yet.**
 
 ## Luxcord in One Line
 
@@ -33,30 +33,27 @@ require("luxcord")
 
 ## Luxcord in Modules
 
-**Entry Point** `/app.js`:
+**· Entry Point** `/app.js`:
 ```js
 const luxcord = require("luxcord");
 
 let opts = {
-  name: "my-amazing-bot",
   prefix: ".",
-  token: "super-secret-token",
-  verbose: true
+  token: "super-secret-token"
 }
 
 luxcord.init(opts);
 ```
 
-**Command Module** `/cmd/gift.js`:
+**· Command Module** `/cmd/gift.js`:
 ```js
 exports.opts = {
   name: "gift",
   args: {
-    target: "member-optional",
+    target: "member-mention",
     gift: "string-join"
   },
-  desc: "Gift someone something!",
-  subs: ["member"]
+  aliases: ["give", "present"]
 }
 
 exports.run = function (message) {
@@ -69,7 +66,7 @@ exports.run = function (message) {
 }
 ```
 
-**Event Module** `/evt/channelCreate.js`:
+**· Event Module** `/evt/channelCreate.js`:
 ```js
 exports.run = function (channel) {
   if (channel.type !== "text") return;
@@ -78,3 +75,6 @@ exports.run = function (channel) {
   else channel.send("First! ;)");
 }
 ```
+
+  [1]: https://npmjs.com/package/luxcord
+  [2]: https://github.com/luxluxdev/luxcord

@@ -2,17 +2,19 @@ exports.run = (client) => {
   let Discord = this.Discord;
   
   // client.log
+  client.log = str => console.log(client.opts.name + " > " + str);
+
   if (client.opts.verbose)
-    client.log = str => console.log(client.opts.name + " > " + str);
+    client.vlog = str => console.log(client.opts.name + " > " + str);
   else
-    client.log = () => {};
+    client.vlog = () => {};
 
   // client.cmd
   client.commands = new Map();
   client.commands.getFromAlias = function (alias) {
     return [...client.commands.values()].reverse().find(cmd => {
-      if (!cmd.opts.aliases) return false;
-      return cmd.opts.aliases.includes(alias)
+      if (!cmd.opts || !cmd.opts.aliases) return false;
+      return cmd.opts.aliases.includes(alias);
     });
   }
 
@@ -24,7 +26,7 @@ exports.run = (client) => {
       run: f
     });
 
-    client.log("command registered: " + opts.name);
+    client.log("registered command: " + opts.name);
 
     return client;
   }
@@ -32,7 +34,7 @@ exports.run = (client) => {
   // client.evt
   client.evt = function(evt, f) {
     client.on(evt, f);
-    client.log("event registered: " + evt);
+    client.log("registered event: " + evt);
     return client;
   }
 }
