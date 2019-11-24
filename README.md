@@ -1,10 +1,12 @@
 # Luxcord - An elegant discord.js framework
 
-**Luxcord v1.0.7** - `npm i luxcord` - [npm][1] [github][2]
-
 Designed with simplicity and flexibility in mind.
 
-Currently a work in progress. **Not ready for public use just yet.**
+[npm][1] · [github][2]
+
+```
+> npm i luxcord
+```
 
 ## Luxcord in One Line
 
@@ -75,6 +77,8 @@ exports.run = function (channel) {
   else channel.send("First! ;)");
 }
 ```
+
+Currently a work in progress. **Not ready for public use just yet.**
 
   [1]: https://npmjs.com/package/luxcord
   [2]: https://github.com/luxluxdev/luxcord

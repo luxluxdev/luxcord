@@ -8,6 +8,7 @@ exports.Luxcord = function (opts) {
     ownerID: undefined,
     verbose: false,
     allowBots: false,
+    allowDMs: false,
     clientArg: false,
     argsArg: false,
     prefix: "luxcord.",

@@ -1,10 +1,9 @@
 {
   "name": "luxcord",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "An elegant discord.js framework",
   "main": "luxcord.js",
   "scripts": {
-    "start": "node luxcord.js",
     "test": "node test/lux.js"
   },
   "dependencies": {

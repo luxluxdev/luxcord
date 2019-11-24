@@ -1,6 +1,8 @@
 const path = require("path");
 
 exports.run = function (message) {
+  if (message.channel.type === "dm" && !client.opts.allowDMs) return;
+
   let embeds = message.embeds.reduce((a,b) => a + "[embed: " + (b.title || b.author.name || b.description) + "]", "");
   this.vlog("message received from " + message.author.tag + ": " + message.content + embeds);
 
@@ -26,7 +28,7 @@ exports.run = function (message) {
   this.vlog("command detected: `" + cmd + "` with " + args.length + " arguments");
 
   message.cmd = cmd;
-  message.args = args;
+  message.args = {};
   message.uargs = [...args];
   
   let command = this.commands.get(cmd) || this.commands.getFromAlias(cmd);
