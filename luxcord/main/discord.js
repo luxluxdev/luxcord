@@ -21,12 +21,22 @@ exports.run = (client) => {
   client.cmd = function(opts, f) {
     if (typeof(opts) === "string") opts = {name: opts};
 
-    client.commands.set(opts.name, {
-      opts: opts,
-      run: f
-    });
+    if (typeof(f) === "string") {
+      client.commands.set(opts.name, {
+        opts: opts,
+        run: function (message) {
+          message.channel.send(f);
+        }
+      });
+    }
+    else {
+      client.commands.set(opts.name, {
+        opts: opts,
+        run: f
+      });
+    }
 
-    client.log("registered command: " + opts.name);
+    client.vlog("registered command: " + opts.name);
 
     return client;
   }
@@ -34,7 +44,7 @@ exports.run = (client) => {
   // client.evt
   client.evt = function(evt, f) {
     client.on(evt, f);
-    client.log("registered event: " + evt);
+    client.vlog("registered event: " + evt);
     return client;
   }
 }

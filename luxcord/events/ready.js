@@ -1,6 +1,6 @@
 exports.run = function () {
   this.vlog("---------------------------------------------------");
-  this.log(this.opts.name + " > successful login               ");
+   this.log("successful login                                   ");
   this.vlog("---------------------------------------------------");
   this.vlog("usertag:   " + this.user.tag);
   this.vlog("id:        " + this.user.id);

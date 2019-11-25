@@ -11,7 +11,7 @@ Designed with simplicity and flexibility in mind.
 ## Luxcord in One Line
 
 ```js
-require("luxcord").init({token: "..."}).cmd("ping", msg => msg.reply("pong"));
+require("luxcord").init({token: "..."}).cmd("ping", "pong");
 ```
 
 ## Luxcord in One File
@@ -29,7 +29,7 @@ require("luxcord")
 })
 
 .evt("guildMemberAdd", function(member) {
-  member.send("Welcome to our server!");
+  member.send(`Welcome to ${member.guild.name}!`);
 })
 ```
 
@@ -52,8 +52,8 @@ luxcord.init(opts);
 exports.opts = {
   name: "gift",
   args: {
-    target: "member-mention",
-    gift: "string-join"
+    target: "member",
+    gift: "string+"
   },
   aliases: ["give", "present"]
 }
@@ -61,10 +61,13 @@ exports.opts = {
 exports.run = function (message) {
   let args = message.args;
   
-  if (args.target.id === message.author.id) return message.channel.embed("Error", "You gifted yourself " + args.gift + "...");
-  if (args.target.id === this.user.id) return message.channel.embed("Thank you!", "I appreciate it :)");
-
-  return message.channel.embed("Gift!", "" + message.author + " gifted " + args.target + " " + args.gift + "!");
+  if (args.target.id === message.author.id) 
+    message.channel.embed("Error", `You gave yourself ${args.gift}`);
+  else if (args.target.id === this.user.id)
+    message.channel.embed("Thank you!", "I appreciate it :)");
+  else
+    message.channel.embed("Gift!",
+      `${message.author} gave ${args.target} ${args.gift}!`);
 }
 ```
 
@@ -73,8 +76,10 @@ exports.run = function (message) {
 exports.run = function (channel) {
   if (channel.type !== "text") return;
 
-  if (channel.name === this.opts.name) return channel.send("A channel just for me? That's amazing!");
-  else channel.send("First! ;)");
+  if (channel.name === this.opts.name)
+    channel.send("A channel just for me? That's amazing!");
+  else
+    channel.send("First! ;)");
 }
 ```
 

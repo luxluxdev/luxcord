@@ -7,6 +7,8 @@ exports.run = (client) => {
   if (client.opts.scanevt && fs.existsSync(client.opts.evtdir)) events = requireall(client.opts.evtdir);
 
   for (let name in commands) {
+    if (commands[name].luxcord === false) continue;
+
     f = commands[name].run;
     if (!commands[name].opts) {
       cmd = name;
