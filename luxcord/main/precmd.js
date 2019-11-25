@@ -1,11 +1,50 @@
 exports.run = function (command, message) {
-  parseArgs.call(this, command, message);
+  let types = {...command.opts.args} || {};
+  let typeArray = [];
+
+  // organize into array, separate optional tag
+  for (let t in types) {
+    let optional = types[t].endsWith("?");
+
+    typeArray.push({
+      name: t,
+      value: optional ? types[t].slice(0, -1) : types[t],
+      optional: optional
+    });
+
+    types[t] = optional ? types[t].slice(0, -1) : types[t];
+  }
+
+  // count number of required arguments
+  let nRequired = typeArray.reduce((a, b) => a + (b.optional ? 0 : 1), 0);
+
+  if (message.uargs.length < nRequired) return message.syntax(command.opts.name);
+
+  let adjusted;
+
+  if (message.uargs.length < typeArray.length) {
+    adjusted = {};
+
+    // max number of optionals to take = received arguments - required arguments
+    optionalsRemaining = message.uargs.length - nRequired;
+    for (let t of typeArray) {
+      if (t.optional) {
+        if (optionalsRemaining > 0) {
+          optionalsRemaining--;
+          adjusted[t.name] = t.value;
+        }
+      } else {
+        adjusted[t.name] = t.value;
+      }
+    }
+  }
+  
+  parseArgs.call(this, message, adjusted || types);
 }
 
-function parseArgs(command, message) {
+function parseArgs(message, types) {
   let uargs = [...message.uargs];
-
-  let types = command.opts.args || {};
+  
   let nameArray = Object.keys(types);
   let typeArray = Object.values(types);
 
@@ -21,7 +60,7 @@ function parseArgs(command, message) {
 
     if (type === "string+") break;
 
-    message.args[nameArray[i]] = parse(uargs.shift(), type);
+    message.args[nameArray[i]] = parse.call(this, uargs.shift(), type, message);
   
     i++;
   }
@@ -47,7 +86,7 @@ function parseArgs(command, message) {
 
 function parse(str, type, message) {
   let a = ["any", "string", "number", "int", "user", "member", "channel", "guild", "role"];
-  if (!a.includes(type)) return undefined;
+  if (!a.includes(type)) return str;
 
   switch (type) {
     case "any": return str;

@@ -36,7 +36,10 @@ exports.run = function (message) {
 
     // TO-DO command authenticator
   
-    require("../main/precmd.js").run.call(this, command, message);
+    let s = require("../main/precmd.js").run.call(this, command, message);
+    if (s === -1) return;
+
+    this.log(s);
 
     let cmdargs = [message];
     if (this.opts.clientArg) cmdargs.unshift(client);

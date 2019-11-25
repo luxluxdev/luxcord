@@ -24,11 +24,11 @@ require("luxcord")
   token: "super-secret-token"
 })
 
-.cmd("yin", function(message) {
+.cmd("yin", function (message) {
   message.channel.send("yang");
 })
 
-.evt("guildMemberAdd", function(member) {
+.evt("guildMemberAdd", function (member) {
   member.send(`Welcome to ${member.guild.name}!`);
 })
 ```
@@ -47,27 +47,26 @@ let opts = {
 luxcord.init(opts);
 ```
 
-**· Command Module** `/cmd/gift.js`:
+**· Command Module** `/cmd/cookie.js`:
 ```js
 exports.opts = {
-  name: "gift",
+  name: "cookie",
   args: {
+    amount: "number?",
     target: "member",
-    gift: "string+"
+    reason: "string+"
   },
-  aliases: ["give", "present"]
+  aliases: ["gift", "cookies"]
 }
 
 exports.run = function (message) {
-  let args = message.args;
+  let {amount, target, reason} = message.args;
+  let sender = message.author;
   
-  if (args.target.id === message.author.id) 
-    message.channel.embed("Error", `You gave yourself ${args.gift}`);
-  else if (args.target.id === this.user.id)
-    message.channel.embed("Thank you!", "I appreciate it :)");
-  else
-    message.channel.embed("Gift!",
-      `${message.author} gave ${args.target} ${args.gift}!`);
+  let cookies = (amount) ? (amount + " cookies") : ("a cookie");
+
+  message.channel.embed("Cookie Gift!",
+    `${target}, ${sender} gave you ${cookies} because ${reason}`)
 }
 ```
 
@@ -77,13 +76,25 @@ exports.run = function (channel) {
   if (channel.type !== "text") return;
 
   if (channel.name === this.opts.name)
-    channel.send("A channel just for me? That's amazing!");
+    channel.send("A channel just for me? Awesome!");
   else
     channel.send("First! ;)");
 }
 ```
 
-Currently a work in progress. **Not ready for public use just yet.**
+## Reasons to Luxcord
+
+  - **Elegance:** Syntax is flexible, short and clean.
+  - **Swiftness:** Write a bot in minutes, if not seconds.
+  - **Simplicity:** As non-verbose as possible. Easy to read, easy to write. Straightforward for beginners and veterans alike.
+  - **Automation:** Commands and Events automatically registered from scanned folders.
+  - **Argument Parsing:** Numbers, integers, users, members, channels, roles, guilds. From mentions, IDs, names or even nicknames. Optional arguments are very easy to implement. Parsed arguments are directly accessible from `message.args` in their respective object forms.
+  - **Ranking:** Simple yet powerful ranking system for commands. Commands divided into groups for easy classification, depending on member roles, permissions or IDs.
+  - **Compatibility:** Underlying discord.js library completely exposed.
+  - **Addons:** Powerful addons to perform powerful tasks.
+  - **Documentation:** Work in progress!
+
+**Note:** Currently a work in progress! Project not fully complete yet. If you need help, contact me directly on Discord (`luxluxdev#0299`) or feel free to open an issue on github!
 
   [1]: https://npmjs.com/package/luxcord
   [2]: https://github.com/luxluxdev/luxcord
