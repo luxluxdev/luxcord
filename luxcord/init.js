@@ -15,6 +15,7 @@ exports.Luxcord = function (opts) {
     fullSyntaxError: false,       // syntax errors include argument types
     scancmd: true,                // scan for command modules
     scanevt: true,                // scan for event modules
+    scancfg: true,                // scan config files
     cmddir: "./cmd/",             // command module directory
     evtdir: "./evt/",             // event module directory
     cfgdir: "./cfg/",             // config directory

@@ -2,7 +2,7 @@
 
 Designed with simplicity and flexibility in mind.
 
-[npm][1] · [github][2]
+[npm][1] · [github][2] · [docs][3]
 
 ```
 > npm i luxcord
@@ -66,7 +66,7 @@ exports.run = function (message) {
   let cookies = (amount) ? (amount + " cookies") : ("a cookie");
 
   message.channel.embed("Cookie Gift!",
-    `${target}, ${sender} gave you ${cookies} because ${reason}`)
+    `${target}, ${sender} gave you ${cookies} because ${reason}`);
 }
 ```
 
@@ -88,13 +88,14 @@ exports.run = function (channel) {
   - **Swiftness:** Write a bot in minutes, if not seconds.
   - **Simplicity:** As non-verbose as possible. Easy to read, easy to write. Straightforward for beginners and veterans alike.
   - **Automation:** Commands and Events automatically registered from scanned folders.
-  - **Argument Parsing:** Numbers, integers, users, members, channels, roles, guilds. From mentions, IDs, names or even nicknames. Optional arguments are very easy to implement. Parsed arguments are directly accessible from `message.args` in their respective object forms.
+  - **Argument Parsing:** Numbers, integers, users, members, channels, roles, guilds. From mentions, IDs, names or even nicknames. Optional arguments are very easy to implement. Parsed arguments are directly accessible from "message.args" in their respective object forms.
   - **Ranking:** Simple yet powerful ranking system for commands. Commands divided into groups for easy classification, depending on member roles, permissions or IDs.
   - **Compatibility:** Underlying discord.js library completely exposed.
   - **Addons:** Powerful addons to perform powerful tasks.
-  - **Documentation:** Work in progress!
+  - **Documentation:** [Work in progress!][3]
 
-**Note:** Currently a work in progress! Project not fully complete yet. If you need help, contact me directly on Discord (`luxluxdev#0299`) or feel free to open an issue on github!
+**Note:** Currently a work in progress! Project not fully complete yet. If you need help, contact me directly on Discord (luxluxdev#0299) or feel free to open an issue on github!
 
   [1]: https://npmjs.com/package/luxcord
   [2]: https://github.com/luxluxdev/luxcord
+  [3]: https://luxlux.dev/luxcord/

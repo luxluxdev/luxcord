@@ -88,6 +88,7 @@ function parse(str, type, message) {
   let a = ["any", "string", "number", "int", "user", "member", "channel", "guild", "role"];
   if (!a.includes(type)) return str;
 
+  // any string number int
   switch (type) {
     case "any": return str;
     case "string": return str;
@@ -95,6 +96,7 @@ function parse(str, type, message) {
     case "int": return parseInt(str) || undefined;
   }
 
+  // user
   if (type === "user") {
     if (/^<@[0-9]+>$/.test(str)) str = str.slice(2, -1);
     if (/^<@[^0-9]?[0-9]+>$/.test(str)) str = str.slice(3, -1);
@@ -107,6 +109,7 @@ function parse(str, type, message) {
            undefined;
   }
 
+  // member
   if (type === "member") {
     if (/^<@[0-9]+>$/.test(str)) str = str.slice(2, -1);
     if (/^<@[^0-9]?[0-9]+>$/.test(str)) str = str.slice(3, -1);
@@ -122,6 +125,7 @@ function parse(str, type, message) {
            undefined;
   }
 
+  // channel
   if (type === "channel") {
     if (/^<#([0-9]+)>$/.test(str)) str = str.slice(2, -1);
 
@@ -135,6 +139,7 @@ function parse(str, type, message) {
            undefined;
   }
 
+  // role
   if (type === "role") {
     if (/^<#([0-9]+)>$/.test(str)) str = str.slice(2, -1);
 
@@ -145,6 +150,7 @@ function parse(str, type, message) {
            undefined;
   }
 
+  // guild
   if (type === "guild") {
     let guilds = this.guilds;
 

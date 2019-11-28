@@ -2,12 +2,18 @@ exports.run = (client) => {
   let Discord = client.Discord;
   
   // client.log
-  client.log = str => console.log(client.opts.name + " > " + str);
+  client.log = str => console.log(client.opts.name + " > " + indent(str));
 
   if (client.opts.verbose)
-    client.vlog = str => console.log(client.opts.name + " > " + str);
+    client.vlog = str => console.log(client.opts.name + " > " + indent(str));
   else
     client.vlog = () => {};
+
+  function indent(str) {
+    let indent = [...(client.opts.name + " > ")].reduce((a, b) => a + " ", "");
+    
+    return str.split("\n").join("\n" + indent);
+  }
 
   // client.cmd
   client.commands = new Map();
@@ -66,6 +72,13 @@ exports.run = (client) => {
     }
 
     this.channel.embed("Syntax Error", "Correct Usage: ```" + client.opts.prefix + cmd.opts.name + " " + desc.slice(0, -1) + "```");
+
+    return -1;
+  }
+  
+  // message.autherr
+  Discord.Message.prototype.autherr = function (sub) {
+    this.channel.embed("Not Authorized", "You must have `" + sub + "` permissions to use this command");
 
     return -1;
   }
