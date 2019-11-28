@@ -7,7 +7,7 @@ exports.run = function () {
   this.vlog("owner:     " + (this.opts.ownerID ? this.users.get(this.opts.ownerID).tag : "none"));
   this.vlog("guilds:    " + this.guilds.size);
   this.vlog("users:     " + this.users.size);
-  this.vlog("dirname:   " + __dirname);
+  this.vlog("dirname:   " + this.opts.rootdir);
   this.vlog("---------------------------------------------------");
   this.vlog("powered by luxcord                                 ");
   this.vlog("---------------------------------------------------");

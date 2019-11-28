@@ -84,7 +84,7 @@ exports.run = function (channel) {
 
 ## Reasons to Luxcord
 
-  - **Elegance:** Syntax is flexible, short and clean.
+  - **Elegance:** Syntax is flexible, short, and clean.
   - **Swiftness:** Write a bot in minutes, if not seconds.
   - **Simplicity:** As non-verbose as possible. Easy to read, easy to write. Straightforward for beginners and veterans alike.
   - **Automation:** Commands and Events automatically registered from scanned folders.

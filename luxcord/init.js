@@ -38,6 +38,7 @@ exports.Luxcord = function (opts) {
 
   require("./main/discord.js").run(this);
   require("./main/scan.js").run(this);
+  require("./main/addons.js").run(this);
   
   this.login(this.opts.token);
 

@@ -42,7 +42,7 @@ exports.run = (client) => {
       });
     }
 
-    client.vlog("registered command: " + opts.name);
+    client.vlog("register > cmd > " + opts.name);
 
     return client;
   }
@@ -50,7 +50,7 @@ exports.run = (client) => {
   // client.evt
   client.evt = function(evt, f) {
     client.on(evt, f);
-    client.vlog("registered event: " + evt);
+    client.vlog("register > evt > " + evt);
     return client;
   }
 
@@ -78,7 +78,10 @@ exports.run = (client) => {
   
   // message.autherr
   Discord.Message.prototype.autherr = function (sub) {
-    this.channel.embed("Not Authorized", "You must have `" + sub + "` permissions to use this command");
+    if (!sub)
+      this.channel.embed("Not Authorized", "You must be the bot's owner to use this command");
+    else
+      this.channel.embed("Not Authorized", "You must have `" + sub + "` permissions to use this command");
 
     return -1;
   }
