@@ -1,5 +1,3 @@
-exports.opts = 
-
 exports.run = function () {
   this.cmd(
     {

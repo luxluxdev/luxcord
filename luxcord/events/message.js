@@ -6,7 +6,7 @@ exports.run = function (message) {
   // vlog message
   let embeddesc = b => b.title || b.author.name || b.description || (b.fields && b.fields[0] && (b.fields[0].name || b.fields[0].value || "..."));
   let embeds = message.embeds.reduce((a,b) => `${a}\n[embed: ${embeddesc(b)}]`, "");
-  this.vlog(`message > ${message.author.tag} at ${message.guild.name} in #${message.channel.name} ${(message.content ? `\n${message.content}` : "")}${embeds}`);
+  this.vlog("message", `${message.author.tag} at ${message.guild.name} in #${message.channel.name} ${(message.content ? `\n${message.content}` : "")}${embeds}`);
   
   // deny bots and self if needed
   if (!this.opts.allowBots && message.author.bot) return;
@@ -26,7 +26,10 @@ exports.run = function (message) {
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const cmd = args.shift().toLowerCase();
 
-  this.vlog(`command > ${cmd} > ${args.length} arguments ${(args.length > 0 ? "> " + args.join(" | ") : "")}`);
+  if (args.length > 0)
+    this.vlog("command", cmd, `${args.length} arguments`, args.join(" | "));
+  else
+    this.vlog("command", cmd, `${args.length} arguments`);
 
   message.prefix = prefix;
   message.cmd = cmd;
@@ -51,7 +54,7 @@ exports.run = function (message) {
 
       for (let x in message.args) desc += `${x}: ${message.args[x]} | `;
 
-      this.vlog(`command > ${cmd} > args parsed > ${desc.slice(0, -3)}`);
+      this.vlog("command", cmd, "args parsed", desc.slice(0, -3));
     }
 
     // arguments
@@ -65,6 +68,6 @@ exports.run = function (message) {
     else command.run.call(this, ...cmdargs);
   }
   else {
-    this.log(`command > ${cmd} > not found`);
+    this.log("command", cmd, "not found");
   }
 }

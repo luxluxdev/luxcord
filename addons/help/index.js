@@ -5,7 +5,7 @@ exports.run = function () {
       cmd: "string?"
     },
     aliases: ["?"],
-    desc: "lists help menu for the bot's commands"
+    desc: "Command List. Use [cmd] to know more about a specific command."
   }
 
   let run = function (message) {
@@ -28,7 +28,7 @@ exports.run = function () {
             desc += " <" + arg + ">";
       }
 
-      let cmddesc = command.opts.desc || "";
+      let cmddesc = command.opts.desc || " ";
 
       message.channel.embed("Help for '" + command.opts.name + "'", "Usage:```" + this.opts.prefix + command.opts.name + desc + "```\nDescription:```" + cmddesc + "```", null, "< >: required argument, [ ]: optional argument");
 

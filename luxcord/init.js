@@ -8,7 +8,8 @@ exports.Luxcord = function (opts) {
     prefix: "luxcord.",           // bot global prefix
     prefixes: [],                 // bot additional prefixes
     ownerID: undefined,           // owner's discord id, to bypass ranks
-    verbose: false,               // much more verbose logs
+    verbose: false,               // much more verbose logs,
+    logSeparator: " > ",          // log separator
     allowBots: false,             // allow bots to use commands
     allowDMs: false,              // allow commands to run in DMs
     clientArg: false,             // pass client argument to command "run" functions

@@ -2,15 +2,15 @@ exports.run = (client) => {
   let Discord = client.Discord;
   
   // client.log and client.vlog (verbose log)
-  client.log = str => console.log(client.opts.name + " > " + indent(str));
+  client.log = (...str) => console.log(indent([client.opts.name, ...str].join(client.opts.logSeparator)));
 
   if (client.opts.verbose)
-    client.vlog = str => console.log(client.opts.name + " > " + indent(str));
+    client.vlog = (...str) => console.log(indent([client.opts.name, ...str].join(client.opts.logSeparator)));
   else
     client.vlog = () => {};
 
   function indent(str) {
-    let indent = [...(client.opts.name + " > ")].reduce((a, b) => a + " ", "");
+    let indent = [...(client.opts.name + client.opts.logSeparator)].reduce((a, b) => a + " ", "");
     
     return str.split("\n").join("\n" + indent);
   }
@@ -44,7 +44,7 @@ exports.run = (client) => {
       });
     }
 
-    client.vlog(`register > cmd > ${opts.name}${override ? " [override]" : ""}`);
+    client.vlog("register", "cmd", opts.name + (override ? " [override]" : ""));
 
     return client; // return luxcord client for chained calls
   }
@@ -52,7 +52,7 @@ exports.run = (client) => {
   // client.evt
   client.evt = function(evt, f) {
     client.on(evt, f);
-    client.vlog(`register > evt > ${evt}`);
+    client.vlog("register", "evt", evt);
 
     return client; // return luxcord client for chained calls
   }
@@ -75,7 +75,7 @@ exports.run = (client) => {
     }
 
     let syntax = "```" + `${client.opts.prefix}${cmd.opts.name} ${desc.slice(0, -1)}` + "```";
-    this.channel.embed("Syntax Error", `Correct Usage: ${syntax}`);
+    this.channel.embed("Syntax Error", `Correct Usage: ${syntax}`, null, `Use \`${client.opts.prefix}help ${cmd.opts.name}\` for more details`);
 
     return -1;
   }
