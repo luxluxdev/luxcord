@@ -3,6 +3,7 @@ const path = require("path");
 
 exports.run = (client) => {
   client.addons = {};
+  
   let addons = client.opts.addons;
 
   let addonfolders = requireall(path.join(__dirname, "../../addons/"));
@@ -13,11 +14,11 @@ exports.run = (client) => {
 
   for (let addon of addons) {
     if (!Object.keys(addonfolders).includes(addon)) {
-      client.vlog("addons > `" + addon + "` is not a valid addon");
+      client.vlog(`addons > \`${addon}\` is not a valid addon`);
       continue;
     }
 
-    client.vlog("addons > " + addon);
+    client.vlog(`addons > ${addon} > initialized`);
     require(path.join(__dirname, "../../addons/", addon, "/index.js")).run.call(client);
   }
 }

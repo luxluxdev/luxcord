@@ -90,6 +90,7 @@ exports.run = function (channel) {
   - **Automation:** Commands and Events automatically registered from scanned folders.
   - **Argument Parsing:** Numbers, integers, users, members, channels, roles, guilds. From mentions, IDs, names or even nicknames. Optional arguments are very easy to implement. Parsed arguments are directly accessible from "message.args" in their respective object forms.
   - **Ranking:** Simple yet powerful ranking system for commands. Commands divided into groups for easy classification, depending on member roles, permissions or IDs.
+  - **Optionally verbose:** Can be set to verbose mode, detailed logs in console, for easier debugging.
   - **Compatibility:** Underlying discord.js library completely exposed.
   - **Addons:** Powerful addons to perform powerful tasks.
   - **Documentation:** [Work in progress!][3]

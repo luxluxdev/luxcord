@@ -6,6 +6,7 @@ exports.Luxcord = function (opts) {
     name: "luxcord",              // the bot's internal name
     token: undefined,             // discord oauth bot token
     prefix: "luxcord.",           // bot global prefix
+    prefixes: [],                 // bot additional prefixes
     ownerID: undefined,           // owner's discord id, to bypass ranks
     verbose: false,               // much more verbose logs
     allowBots: false,             // allow bots to use commands
@@ -34,12 +35,16 @@ exports.Luxcord = function (opts) {
     "message"
   ];
 
-  events.forEach(e => this.on(e, require("./events/" + e + ".js").run.bind(this)));
+  events.forEach(e => this.on(e, require(`./events/${e}.js`).run.bind(this)));
 
   require("./main/discord.js").run(this);
+  
+  this.vlog("initializing...");
+
   require("./main/scan.js").run(this);
   require("./main/addons.js").run(this);
   
+  this.vlog("logging in...");
   this.login(this.opts.token);
 
   return this;

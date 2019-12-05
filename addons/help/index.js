@@ -30,7 +30,7 @@ exports.run = function () {
 
       let cmddesc = command.opts.desc || "";
 
-      message.channel.embed("Help for '" + command.opts.name + "'", "`" + this.opts.prefix + command.opts.name + desc + "`\n" + cmddesc);
+      message.channel.embed("Help for '" + command.opts.name + "'", "Usage:```" + this.opts.prefix + command.opts.name + desc + "```\nDescription:```" + cmddesc + "```", null, "< >: required argument, [ ]: optional argument");
 
       return;
     }

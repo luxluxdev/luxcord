@@ -1,14 +1,25 @@
+exports.opts = 
+
 exports.run = function () {
-  this.cmd("eval", function (message) {
-    if (message.author.id !== this.opts.ownerID) return message.autherr();
+  this.cmd(
+    {
+      name: "eval",
+      args: {
+        code: "string+"
+      }
+    },
+    
+    function (message) {
+      if (message.author.id !== this.opts.ownerID) return message.autherr();
 
-    let evaled = eval(message.args.code);
+      let evaled = eval(message.args.code);
 
-    if (typeof evaled !== "string")
-      evaled = require("util").inspect(evaled);
+      if (typeof evaled !== "string")
+        evaled = require("util").inspect(evaled);
 
-    message.channel.send(clean(evaled), {code:"xl"});
-  });
+      message.channel.send(clean(evaled), {code:"xl"});
+    }
+  );
 }
 
 function clean(text) {

@@ -1,5 +1,7 @@
 exports.run = function (command, message) {
   if (!this.cmdAuth) return;
+  if (this.opts.ownerID == message.author.id) return;
+
   let subs = this.cmdAuth.subs || {};
   let ranks = this.cmdAuth.ranks || {};
 

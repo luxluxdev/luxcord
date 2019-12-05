@@ -1,7 +1,7 @@
 exports.run = (client) => {
   let Discord = client.Discord;
   
-  // client.log
+  // client.log and client.vlog (verbose log)
   client.log = str => console.log(client.opts.name + " > " + indent(str));
 
   if (client.opts.verbose)
@@ -27,6 +27,8 @@ exports.run = (client) => {
   client.cmd = function(opts, f) {
     if (typeof(opts) === "string") opts = {name: opts};
 
+    let override = client.commands.has(opts.name);
+
     if (typeof(f) === "string") {
       client.commands.set(opts.name, {
         opts: opts,
@@ -42,16 +44,17 @@ exports.run = (client) => {
       });
     }
 
-    client.vlog("register > cmd > " + opts.name);
+    client.vlog(`register > cmd > ${opts.name}${override ? " [override]" : ""}`);
 
-    return client;
+    return client; // return luxcord client for chained calls
   }
 
   // client.evt
   client.evt = function(evt, f) {
     client.on(evt, f);
-    client.vlog("register > evt > " + evt);
-    return client;
+    client.vlog(`register > evt > ${evt}`);
+
+    return client; // return luxcord client for chained calls
   }
 
   // message.syntax
@@ -63,15 +66,16 @@ exports.run = (client) => {
 
     for (let arg in cmd.opts.args) {
       if (client.opts.fullSyntaxError)
-        desc += "<" + arg + ": " + cmd.opts.args[arg] + "> ";
+        desc += `<${arg}: ${cmd.opts.args[arg]}> `;
       else
         if (cmd.opts.args[arg].endsWith("?"))
-          desc += "[" + arg + "] ";
+          desc += `[${arg}] `;
         else
-          desc += "<" + arg + "> ";
+          desc += `<${arg}> `;
     }
 
-    this.channel.embed("Syntax Error", "Correct Usage: ```" + client.opts.prefix + cmd.opts.name + " " + desc.slice(0, -1) + "```");
+    let syntax = "```" + `${client.opts.prefix}${cmd.opts.name} ${desc.slice(0, -1)}` + "```";
+    this.channel.embed("Syntax Error", `Correct Usage: ${syntax}`);
 
     return -1;
   }
@@ -81,7 +85,7 @@ exports.run = (client) => {
     if (!sub)
       this.channel.embed("Not Authorized", "You must be the bot's owner to use this command");
     else
-      this.channel.embed("Not Authorized", "You must have `" + sub + "` permissions to use this command");
+      this.channel.embed("Not Authorized", `You must have \`${sub}\` permissions to use this command`);
 
     return -1;
   }
