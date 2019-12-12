@@ -5,9 +5,10 @@ exports.Luxcord = function (opts) {
   this.opts = {
     name: "luxcord",              // the bot's internal name
     token: undefined,             // discord oauth bot token
-    prefix: "luxcord.",           // bot global prefix
-    prefixes: [],                 // bot additional prefixes
     ownerID: undefined,           // owner's discord id, to bypass ranks
+    prefix: "luxcord.",           // bot global hardcoded prefix
+    prefixes: [],                 // bot additional hardcoded prefixes
+    color: 0xffffff,              // embed strip color
     verbose: false,               // much more verbose logs,
     logSeparator: " > ",          // log separator
     allowBots: false,             // allow bots to use commands
@@ -23,7 +24,11 @@ exports.Luxcord = function (opts) {
     cfgdir: "./cfg/",             // config directory
     absdir: false,                // whether the above directories are absolute paths
     rootdir: rootdir,             // root directory, do not change unless you know what you're doing
-    color: 0xffffff,              // embed strip color
+    mentionPrefix: true,          // use mention as a prefix
+    hardcodedPrefixes: true,      // whether to use the hardcoded prefixes above
+    perServerPrefix: false,       // enable per server prefix
+    perServerColor: false,        // enable per server embed strip color
+    perServerRanks: false,        // enable per server ranks
     addons: [],                   // enabled addons
 
     ...opts                       // user overrides
@@ -43,6 +48,7 @@ exports.Luxcord = function (opts) {
   this.vlog("initializing...");
 
   require("./main/scan.js").run(this);
+  require("./main/db.js").run(this);
   require("./main/addons.js").run(this);
   
   this.vlog("logging in...");

@@ -1,6 +1,6 @@
 {
   "name": "luxcord",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "An elegant discord.js framework",
   "main": "luxcord.js",
   "scripts": {
@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "discord.js": "^11.5.1",
+    "lowdb": "^1.0.0",
     "path": "^0.12.7",
     "require-all": "^3.0.0"
   },

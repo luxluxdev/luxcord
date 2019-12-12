@@ -12,6 +12,6 @@ exports.run = function () {
   this.vlog("users:     " + this.users.size);
   this.vlog("dirname:   " + this.opts.rootdir);
   this.vlog("---------------------------------------------------");
-  this.vlog("powered by luxcord                                 ");
+  this.vlog(`powered by luxcord v${this.luxcordVersion}         `);
   this.vlog("---------------------------------------------------");
 }

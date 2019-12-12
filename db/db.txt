@@ -1,0 +1,1 @@
+Folder reserved for Luxcord's JSON database files.

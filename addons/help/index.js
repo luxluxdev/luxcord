@@ -29,8 +29,13 @@ exports.run = function () {
       }
 
       let cmddesc = command.opts.desc || " ";
+      let cmdex = command.opts.example || " ";
 
-      message.channel.embed("Help for '" + command.opts.name + "'", "Usage:```" + this.opts.prefix + command.opts.name + desc + "```\nDescription:```" + cmddesc + "```", null, "< >: required argument, [ ]: optional argument");
+      let syntax = "Syntax:```" + this.opts.prefix + command.opts.name + desc + "```";
+      if (cmddesc && cmddesc !== " ") syntax += "\nExample Usage:```" + this.opts.prefix + command.opts.name + cmdex + "```";
+      if (cmdex && cmdex !== " ") syntax += "\nDescription:```" + cmddesc + "```";
+
+      message.channel.embed("Help for '" + command.opts.name + "'", syntax, null, "< >: required argument, [ ]: optional argument");
 
       return;
     }

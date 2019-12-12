@@ -6,7 +6,7 @@ exports.run = function (command, message) {
   let ranks = this.cmdAuth.ranks || {};
 
   let cmdsub = "defaultmember";
-  let usersubs = ["defaultmember"]
+  let usersubs = ["defaultmember"];
 
   // get sub containing command
   for (let sub in subs) {
@@ -19,7 +19,7 @@ exports.run = function (command, message) {
   // get subs from ranks the member is in
   for (let rank in ranks) {
     if (userHasRank(message, ranks[rank])) {
-      usersubs = [...usersubs, ...ranks[rank].subs];
+      usersubs.push(...ranks[rank].subs);
     }
   }
 

@@ -17,14 +17,14 @@ exports.run = function () {
     {
       name: "embed",
       args: {
-        str: "string+"
+        embed: "string+"
       },
-      desc: "Send a custom embed!\nstr: <title> | <desc> | <img url> | <footer>"
+      desc: "Send a custom embed!\nembed: [title] | [desc] | [img url] | [footer]"
     },
 
     function (message) {
-      let str = message.args.str;
-      message.channel.embed(...str.split("|"));
+      let embed = message.args.embed;
+      message.channel.embed(...embed.split("|"));
     }
   );
 }

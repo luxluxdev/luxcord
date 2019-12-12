@@ -4,16 +4,29 @@ exports.run = function (message) {
   if (message.channel.type === "dm" && !client.opts.allowDMs) return;
 
   // vlog message
-  let embeddesc = b => b.title || b.author.name || b.description || (b.fields && b.fields[0] && (b.fields[0].name || b.fields[0].value || "..."));
+  let embeddesc = b => b.title || (b.author && b.author.name) || b.description || (b.fields && b.fields[0] && (b.fields[0].name || b.fields[0].value || "..."));
+  let content = message.content ? `\n${message.content}` : "";
   let embeds = message.embeds.reduce((a,b) => `${a}\n[embed: ${embeddesc(b)}]`, "");
-  this.vlog("message", `${message.author.tag} at ${message.guild.name} in #${message.channel.name} ${(message.content ? `\n${message.content}` : "")}${embeds}`);
+  this.vlog("message", `${message.author.tag} (${message.author.id}) at ${message.guild.name} in #${message.channel.name} ${content}${embeds}`);
   
   // deny bots and self if needed
   if (!this.opts.allowBots && message.author.bot) return;
   if (message.author.id == this.user.id) return;
 
+  // load prefixes
+  let prefixes = [];
+  if (this.opts.mentionPrefix) prefixes.push(this.user.toString());
+  if (this.opts.hardcodedPrefixes) {
+    prefixes.push(this.opts.prefix, ...this.opts.prefixes);
+  }
+  if (this.opts.perServerPrefix)  {
+    let serverPrefix = client.sdb(message.guild.id).get("prefix").value();
+    if (serverPrefix) prefixes.push(serverPrefix);
+    let serverPrefixes = client.sdb(message.guild.id).get("prefixes").value();
+    if (serverPrefixes) prefixes.push(serverPrefixes);
+  }
+
   // figure out the prefix used
-  let prefixes = [this.user.toString(), this.opts.prefix, ...this.opts.prefixes];
   let prefix = "";
 
   prefixes.forEach((element) => {
