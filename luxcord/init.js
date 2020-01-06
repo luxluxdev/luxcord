@@ -26,7 +26,7 @@ exports.Luxcord = function (opts) {
     dbdir: "./db/",               // lowdb database directory
     absdir: false,                // whether the above directories are absolute paths
     dbInternal: false,            // use internal folders for lowdb database files (overrides dbdir)
-    //usedb: true,                  // use lowdb for luxcord database
+    usedb: false,                 // use lowdb for luxcord database
     //usesdb: true,                 // use lowdb for per-server database files
     //useudb: true,                 // use lowdb for per-user database files
     //usesudb: true,                // use lowdb for per-server-user database files

@@ -6,6 +6,8 @@ const FileSync = require("lowdb/adapters/FileSync");
 const getLowdb = file => lowdb(new FileSync(file));
 
 exports.run = function (client) {
+  if (!client.opts.usedb) return;
+
   // set up
   client.vlog("db", "setup", "checking for database folders");
   let root = client.opts.dbInternal ? __dirname : client.opts.dbdir;
