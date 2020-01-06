@@ -1,37 +1,49 @@
 exports.run = function (command, message) {
-  if (!this.cmdAuth) return;
-  if (this.opts.ownerID == message.author.id) return;
+  if (this.opts.ownerID == message.author.id && this.opts.ownerBypassAuth) return;
 
-  let subs = this.cmdAuth.subs || {};
-  let ranks = this.cmdAuth.ranks || {};
+  const auth = this.cfgdb.get("cmdAuth").value();
+  if (!auth) return;
 
-  let cmdsub = "defaultmember";
+  let subs = auth.subs || {};
+
+  let ranks = {
+    ...(this.opts.globalRanks ? auth.global : {}),
+    ...(this.opts.perServerRanks ? auth[message.guild.id] : {})
+    // note that server ranks will override their global counterparts if names match
+  }
+
+  let cmdsubs = [];
   let usersubs = ["defaultmember"];
 
-  // get sub containing command
+  // get subs containing command
   for (let sub in subs) {
     if (subs[sub].includes(command.opts.name)) {
-      cmdsub = sub;
-      break;
+      cmdsubs.push(sub);
     }
   }
 
+  // if no subs found, default to "defaultmember"
+  if (cmdsubs.length == 0) cmdsubs = ["defaultmember"];
+
   // get subs from ranks the member is in
   for (let rank in ranks) {
-    if (userHasRank(message, ranks[rank])) {
+    if (userHasRank.call(this, message, ranks[rank], rank)) {
       usersubs.push(...ranks[rank].subs);
     }
   }
 
-  // check if sub is in subs
-  if (usersubs.includes(cmdsub)) {
+  this.vlog("usersubs", usersubs);
+  this.vlog("cmdsubs", cmdsubs);
+
+  // check if usersubs has at least one of the subs
+  if (cmdsubs.some(x => usersubs.includes(x))) {
     return;
   } else {
-    return message.autherr(cmdsub);
+    return message.autherr(cmdsubs);
   }
 }
 
-function userHasRank(message, rank) {
+function userHasRank(message, rank, rankName) {
   let user = message.author;
   let member = message.member;
   

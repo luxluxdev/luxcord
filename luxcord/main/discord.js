@@ -81,16 +81,16 @@ exports.run = (client) => {
   }
   
   // message.autherr
-  Discord.Message.prototype.autherr = function (sub) {
-    if (!sub)
+  Discord.Message.prototype.autherr = function (subs) {
+    if (!subs)
       this.channel.embed("Not Authorized", "You must be the bot's owner to use this command");
     else
-      this.channel.embed("Not Authorized", `You must have \`${sub}\` permissions to use this command`);
+      this.channel.embed("Not Authorized", `You must have \`${subs.join(" or ")}\` permissions to use this command`);
 
     return -1;
   }
 
-  // channel.embed
+  // client.embed
   client.embed = (title, description, image, footer, timestamp, thumbnail) => {
     return {embed: {
       title: title,

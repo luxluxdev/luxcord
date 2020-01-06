@@ -5,7 +5,8 @@ exports.Luxcord = function (opts) {
   this.opts = {
     name: "luxcord",              // the bot's internal name
     token: undefined,             // discord oauth bot token
-    ownerID: undefined,           // owner's discord id, to bypass ranks
+    ownerID: undefined,           // owner's discord id
+    ownerBypassAuth: true,        // if the owner bypasses cmdAuth
     prefix: "luxcord.",           // bot global hardcoded prefix
     prefixes: [],                 // bot additional hardcoded prefixes
     color: 0xffffff,              // embed strip color
@@ -22,19 +23,26 @@ exports.Luxcord = function (opts) {
     cmddir: "./cmd/",             // command module directory
     evtdir: "./evt/",             // event module directory
     cfgdir: "./cfg/",             // config directory
+    dbdir: "./db/",               // lowdb database directory
     absdir: false,                // whether the above directories are absolute paths
+    dbInternal: false,            // use internal folders for lowdb database files (overrides dbdir)
+    //usedb: true,                  // use lowdb for luxcord database
+    //usesdb: true,                 // use lowdb for per-server database files
+    //useudb: true,                 // use lowdb for per-user database files
+    //usesudb: true,                // use lowdb for per-server-user database files
     rootdir: rootdir,             // root directory, do not change unless you know what you're doing
     mentionPrefix: true,          // use mention as a prefix
     hardcodedPrefixes: true,      // whether to use the hardcoded prefixes above
     perServerPrefix: false,       // enable per server prefix
     perServerColor: false,        // enable per server embed strip color
     perServerRanks: false,        // enable per server ranks
+    globalRanks: true,            // whether to use global ranks
     addons: [],                   // enabled addons
 
     ...opts                       // user overrides
   };
 
-  if (!this.opts.absdir) ["cmddir", "evtdir", "cfgdir"].forEach(e => this.opts[e] = path.join(rootdir, this.opts[e]));
+  if (!this.opts.absdir) for (let e of ["cmddir", "evtdir", "cfgdir", "dbdir"]) this.opts[e] = path.join(rootdir, this.opts[e]);
 
   const events = [
     "ready",

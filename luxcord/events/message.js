@@ -25,6 +25,8 @@ exports.run = function (message) {
     let serverPrefixes = client.sdb(message.guild.id).get("prefixes").value();
     if (serverPrefixes) prefixes.push(serverPrefixes);
   }
+  // if no loaded prefixes, default to "luxcord."
+  if (prefixes.length == 0) prefixes = ["luxcord."];
 
   // figure out the prefix used
   let prefix = "";
@@ -73,12 +75,19 @@ exports.run = function (message) {
     // arguments
     let cmdargs = [message];
 
-    // add optional client and args arguments, if specified via opts
+    // add optional client and args arguments, if specified via opts, (client, message, args)
     if (this.opts.clientArg) cmdargs.unshift(client);
     if (this.opts.argsArg) cmdargs.push(message.args);
 
     // run
-    else command.run.call(this, ...cmdargs);
+    else try {
+      command.run.call(this, ...cmdargs);
+    } catch (err) {
+      this.log("UNHANDLED ERROR", `command ${cmd} threw an exception...`);
+      console.log("\n----- ERROR STACK TRACE START -----------------------------------------\n");
+      console.error(err);
+      console.log("\n----- ERROR STACK TRACE END   -----------------------------------------\n");
+    }
   }
   else {
     this.log("command", cmd, "not found");

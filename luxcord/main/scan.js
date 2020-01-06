@@ -34,16 +34,4 @@ exports.run = (client) => {
     evt = name;
     client.evt(evt, f);
   }
-
-  // config
-  client.vlog("scanner", "config modules");
-  if (client.opts.scancfg && fs.existsSync(client.opts.cfgdir)) {
-    try {
-      client.cmdAuth = require(path.join(client.opts.cfgdir, "./cmdAuth.json"));
-      client.vlog("scanner", "config modules", "cmdAuth loaded");
-    } catch (err) {
-      if (err.code != "MODULE_NOT_FOUND") throw err;
-      client.vlog("scanner", "config modules", "cmdAuth not found");
-    }
-  }
 }

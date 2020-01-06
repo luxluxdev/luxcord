@@ -5,7 +5,8 @@ exports.run = function () {
       args: {
         text: "string+"
       },
-      desc: "Make me say something!"
+      desc: "Send a custom message!",
+      example: "beep boop"
     },
 
     function (message) {
@@ -19,7 +20,8 @@ exports.run = function () {
       args: {
         embed: "string+"
       },
-      desc: "Send a custom embed!\nembed: [title] | [desc] | [img url] | [footer]"
+      desc: "Send a custom embed!\nembed: [title] | [desc] | [img url] | [footer]",
+      example: "Welcome! | Enjoy your stay :) | | At your service! :D"
     },
 
     function (message) {
