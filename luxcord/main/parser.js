@@ -128,6 +128,7 @@ function parse(str, type, message) {
   // channel
   if (type === "channel") {
     if (/^<#([0-9]+)>$/.test(str)) str = str.slice(2, -1);
+    if (/^<@[^0-9]?[0-9]+>$/.test(str)) str = str.slice(3, -1);
 
     let guildtxtch = message.guild.channels.filter(ch => ch.type == "text");
     let guildch = message.guild.channels;
@@ -142,6 +143,7 @@ function parse(str, type, message) {
   // role
   if (type === "role") {
     if (/^<#([0-9]+)>$/.test(str)) str = str.slice(2, -1);
+    if (/^<@[^0-9]?[0-9]+>$/.test(str)) str = str.slice(3, -1);
 
     let roles = message.guild.roles;
 
