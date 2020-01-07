@@ -1,7 +1,7 @@
 const path = require("path");
 
 exports.run = function (message) {
-  if (message.channel.type === "dm" && !client.opts.allowDMs) return;
+  if (message.channel.type === "dm" && !this.opts.allowDMs) return;
 
   // vlog message
   let embeddesc = b => b.title || (b.author && b.author.name) || b.description || (b.fields && b.fields[0] && (b.fields[0].name || b.fields[0].value || "..."));
@@ -19,12 +19,12 @@ exports.run = function (message) {
   if (this.opts.hardcodedPrefixes) {
     prefixes.push(this.opts.prefix, ...this.opts.prefixes);
   }
-  if (this.opts.perServerPrefix)  {
-    let serverPrefix = client.sdb(message.guild.id).get("prefix").value();
+  /*if (this.opts.perServerPrefix)  {
+    let serverPrefix = this.sdb(message.guild.id).get("prefix").value();
     if (serverPrefix) prefixes.push(serverPrefix);
-    let serverPrefixes = client.sdb(message.guild.id).get("prefixes").value();
+    let serverPrefixes = this.sdb(message.guild.id).get("prefixes").value();
     if (serverPrefixes) prefixes.push(serverPrefixes);
-  }
+  }*/
   // if no loaded prefixes, default to "luxcord."
   if (prefixes.length == 0) prefixes = ["luxcord."];
 
