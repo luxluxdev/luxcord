@@ -4,7 +4,9 @@ exports.run = function () {
       name: "eval",
       args: {
         code: "string+"
-      }
+      },
+      desc: "run javascript code and print its return value",
+      example: "message.guild.members.map(m => m.displayName)"
     },
     
     function (message) {

@@ -5,6 +5,7 @@ exports.run = (client) => {
   client.addons = {};
   
   let addons = client.opts.addons;
+  if (addons == "default") addons = ["help", "eval", "customMessages"];
 
   let addonfolders = requireall(path.join(__dirname, "../../addons/"));
 

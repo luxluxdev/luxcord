@@ -37,7 +37,8 @@ exports.Luxcord = function (opts) {
     perServerColor: false,        // enable per server embed strip color
     perServerRanks: false,        // enable per server ranks
     globalRanks: true,            // whether to use global ranks
-    addons: [],                   // enabled addons
+    defaultRankName: "general",   // default rank name if a member has no rank
+    addons: [],                   // array of enabled addons, or "default" to use a basic set
 
     ...opts                       // user overrides
   };

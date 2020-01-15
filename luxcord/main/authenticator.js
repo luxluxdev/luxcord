@@ -1,6 +1,8 @@
 exports.run = function (command, message) {
   if (this.opts.ownerID == message.author.id && this.opts.ownerBypassAuth) return;
 
+  let defaultRankName = this.opts.defaultRankName;
+
   const auth = this.cfgdb.get("cmdAuth").value();
   if (!auth) return;
 
@@ -13,7 +15,7 @@ exports.run = function (command, message) {
   }
 
   let cmdsubs = [];
-  let usersubs = ["defaultmember"];
+  let usersubs = [defaultRankName];
 
   // get subs containing command
   for (let sub in subs) {
@@ -22,8 +24,8 @@ exports.run = function (command, message) {
     }
   }
 
-  // if no subs found, default to "defaultmember"
-  if (cmdsubs.length == 0) cmdsubs = ["defaultmember"];
+  // if no subs found, default to defaultRankName
+  if (cmdsubs.length == 0) cmdsubs = [defaultRankName];
 
   // get subs from ranks the member is in
   for (let rank in ranks) {
@@ -31,9 +33,6 @@ exports.run = function (command, message) {
       usersubs.push(...ranks[rank].subs);
     }
   }
-
-  this.vlog("usersubs", usersubs);
-  this.vlog("cmdsubs", cmdsubs);
 
   // check if usersubs has at least one of the subs
   if (cmdsubs.some(x => usersubs.includes(x))) {

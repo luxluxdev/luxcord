@@ -19,12 +19,7 @@ exports.run = function (message) {
   if (this.opts.hardcodedPrefixes) {
     prefixes.push(this.opts.prefix, ...this.opts.prefixes);
   }
-  /*if (this.opts.perServerPrefix)  {
-    let serverPrefix = this.sdb(message.guild.id).get("prefix").value();
-    if (serverPrefix) prefixes.push(serverPrefix);
-    let serverPrefixes = this.sdb(message.guild.id).get("prefixes").value();
-    if (serverPrefixes) prefixes.push(serverPrefixes);
-  }*/
+  
   // if no loaded prefixes, default to "luxcord."
   if (prefixes.length == 0) prefixes = ["luxcord."];
 
@@ -83,7 +78,7 @@ exports.run = function (message) {
     else try {
       command.run.call(this, ...cmdargs);
     } catch (err) {
-      this.log("UNHANDLED ERROR", `command ${cmd} threw an exception...`);
+      this.log("command", cmd, "UNHANDLED EXCEPTION", "logging stack trace...");
       console.log("\n----- ERROR STACK TRACE START -----------------------------------------\n");
       console.error(err);
       console.log("\n----- ERROR STACK TRACE END   -----------------------------------------\n");
