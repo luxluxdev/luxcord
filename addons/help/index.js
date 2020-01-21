@@ -97,7 +97,7 @@ function restCommands() {
   }
   // for all commands not in any subs
   let desc = "";
-  for (let cmd of [...this.commands].map(x => x[0]).filter(x => !allSubCommands.includes(x))) {
+  for (let cmd of [...this.commands].map(x => x[1]).filter(x => !allSubCommands.includes(x.opts.name))) {
     desc += "- `" + this.opts.prefix + cmd.opts.name;
     for (let arg in cmd.opts.args) {
       if (this.opts.fullSyntaxError)
