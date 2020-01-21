@@ -91,12 +91,13 @@ function subCommands(sub) {
 
 function restCommands() {
   let allSubCommands = [];
-  if (this.cfgdb) for (let sub in this.cfgdb.get("cmdAuth.subs")) {
-    allSubCommands.push(...sub);
+  let subs = this.cfgdb.get("cmdAuth.subs").value();
+  if (this.cfgdb) for (let sub in subs) {
+    allSubCommands.push(...subs[sub]);
   }
   // for all commands not in any subs
   let desc = "";
-  for (let cmd of [...this.commands].map(x => x[1]).filter(x => !allSubCommands.includes(x.opts.name))) {
+  for (let cmd of [...this.commands].map(x => x[0]).filter(x => !allSubCommands.includes(x))) {
     desc += "- `" + this.opts.prefix + cmd.opts.name;
     for (let arg in cmd.opts.args) {
       if (this.opts.fullSyntaxError)
