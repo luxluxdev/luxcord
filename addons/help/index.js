@@ -60,7 +60,7 @@ function allCommands(message) {
     .setColor(this.opts.color)
   ;
 
-  for (let sub in this.cfgdb.get("cmdAuth.subs").value())
+  if (this.cfgdb) for (let sub in this.cfgdb.get("cmdAuth.subs").value())
     embed.addField(sub, subCommands.call(this, sub));
 
   embed.addField(this.opts.defaultRankName, restCommands.call(this));
