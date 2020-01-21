@@ -3,6 +3,8 @@ exports.run = function (command, message) {
 
   let defaultRankName = this.opts.defaultRankName;
 
+  if (!this.cfgdb) return;
+
   const auth = this.cfgdb.get("cmdAuth").value();
   if (!auth) return;
 
