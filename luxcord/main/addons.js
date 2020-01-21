@@ -6,6 +6,12 @@ exports.run = (client) => {
   
   let addons = client.opts.addons;
   if (addons == "default") addons = ["help", "eval", "customMessages"];
+  if (addons.includes("default")) {
+    addons.pull("default");
+    addons.push("help", "eval", "customMessages");
+    let s = new Set(addons);
+    addons = Array.from(s);
+  }
 
   let addonfolders = requireall(path.join(__dirname, "../../addons/"));
 
