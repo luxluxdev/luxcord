@@ -91,7 +91,7 @@ function subCommands(sub) {
 
 function restCommands() {
   let allSubCommands = [];
-  for (let sub in this.cfgdb.get("cmdAuth.subs")) {
+  if (thi.cfg) for (let sub in this.cfgdb.get("cmdAuth.subs")) {
     allSubCommands.push(...sub);
   }
   // for all commands not in any subs
