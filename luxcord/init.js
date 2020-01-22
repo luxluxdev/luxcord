@@ -43,7 +43,11 @@ exports.Luxcord = function (opts) {
     ...opts                       // user overrides
   };
 
-  if (!this.opts.token) return;
+  if (!this.opts.token) return {
+    err: "no token was provided",
+    cmd: () => {},
+    evt: () => {}
+  };
 
   if (!this.opts.absdir) for (let e of ["cmddir", "evtdir", "cfgdir", "dbdir"]) this.opts[e] = path.join(rootdir, this.opts[e]);
 
