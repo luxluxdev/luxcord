@@ -81,11 +81,11 @@ exports.run = (client) => {
   }
   
   // message.autherr
-  Discord.Message.prototype.autherr = function (subs) {
-    if (!subs)
-      this.channel.embed("Not Authorized", "You must be the bot's owner to use this command");
+  Discord.Message.prototype.autherr = function (ranks) {
+    if (!ranks)
+      this.channel.embed("Not Authorized", "You don't have permission.");
     else
-      this.channel.embed("Not Authorized", `You must have \`${subs.join(" or ")}\` permissions to use this command`);
+      this.channel.embed("Not Authorized", `You must have \`${(ranks.length == 1) ? (ranks[0]) : (`${ranks.slice(0, -1).join("\`, \`")}\` or \`${ranks[ranks.length - 1]}`)}\` permissions to use this command`);
 
     return -1;
   }
@@ -102,14 +102,23 @@ exports.run = (client) => {
       color: client.opts.color
     }}
   }
-  
-  // template embed promise function
-  const embed = function (title, description, image, footer, timestamp, thumbnail) {
+
+  // message.editEmbed
+  Discord.Message.prototype.editEmbed = function (...embedParams) {
     return new Promise((resolve, reject) => {
-      this.send(client.embed(title, description, image, footer, timestamp, thumbnail))
+      this.edit(client.embed(...embedParams))
       .then(msg => resolve(msg))
       .catch(err => reject(err));
-    })
+    });
+  }
+  
+  // template embed promise function
+  const embed = function (...embedParams) {
+    return new Promise((resolve, reject) => {
+      this.send(client.embed(...embedParams))
+      .then(msg => resolve(msg))
+      .catch(err => reject(err));
+    });
   }
   
   const protoembed = object => object.prototype.embed = embed;

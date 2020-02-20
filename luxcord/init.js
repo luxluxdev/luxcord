@@ -22,14 +22,12 @@ exports.Luxcord = function (opts) {
     scancfg: true,                // scan config files
     cmddir: "./cmd/",             // command module directory
     evtdir: "./evt/",             // event module directory
-    cfgdir: "./cfg/",             // config directory
     dbdir: "./db/",               // lowdb database directory
     absdir: false,                // whether the above directories are absolute paths
     dbInternal: false,            // use internal folders for lowdb database files (overrides dbdir)
-    usedb: false,                 // use lowdb for luxcord database
-    //usesdb: true,                 // use lowdb for per-server database files
-    //useudb: true,                 // use lowdb for per-user database files
-    //usesudb: true,                // use lowdb for per-server-user database files
+    usedb: true,                  // use lowdb for luxcord database (required for cmdAuth)
+    useCmdAuth: true,             // use cmdAuth (requires usedb to be true)
+    checkNestedInherits: true,    // check for nested inheritance in cmdAuth ranks
     rootdir: rootdir,             // root directory, do not change unless you know what you're doing
     mentionPrefix: true,          // use mention as a prefix
     hardcodedPrefixes: true,      // whether to use the hardcoded prefixes above
@@ -38,7 +36,19 @@ exports.Luxcord = function (opts) {
     perServerRanks: false,        // enable per server ranks
     globalRanks: true,            // whether to use global ranks
     defaultRankName: "general",   // default rank name if a member has no rank
-    addons: [],                   // array of enabled addons, or "default" to use a basic set
+
+    addons: [],                   // array of enabled addons, or "default" to use a basic set,
+
+    // Addon Specific Options
+
+    // express
+    port: 3000,                   // port to listen to
+    uptimer: true,                // listen for http requests at /ping
+    listen: true,                 // app.listen
+    useWebClient: false,          // use web client at /webclient
+
+    // questionnaire
+    maxQuestions: 100,            // max questions asked before aborting
 
     ...opts                       // user overrides
   };
@@ -49,7 +59,7 @@ exports.Luxcord = function (opts) {
     evt: () => {}
   };
 
-  if (!this.opts.absdir) for (let e of ["cmddir", "evtdir", "cfgdir", "dbdir"]) this.opts[e] = path.join(rootdir, this.opts[e]);
+  if (!this.opts.absdir) for (let e of ["cmddir", "evtdir", "dbdir"]) this.opts[e] = path.join(rootdir, this.opts[e]);
 
   const events = [
     "ready",

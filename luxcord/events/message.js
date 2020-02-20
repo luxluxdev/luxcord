@@ -4,7 +4,7 @@ exports.run = function (message) {
   if (message.channel.type === "dm" && !this.opts.allowDMs) return;
 
   // vlog message
-  let embeddesc = b => b.title || (b.author && b.author.name) || b.description || (b.fields && b.fields[0] && (b.fields[0].name || b.fields[0].value || "..."));
+  let embeddesc = b => b.title || (b.author && b.author.name) || b.description || (b.fields && b.fields[0] && (b.fields[0].name || b.fields[0].value)) || "(...)";
   let content = message.content ? `\n${message.content}` : "";
   let embeds = message.embeds.reduce((a,b) => `${a}\n[embed: ${embeddesc(b)}]`, "");
   this.vlog("message", `${message.author.tag} (${message.author.id}) at ${message.guild.name} in #${message.channel.name} ${content}${embeds}`);
@@ -75,7 +75,7 @@ exports.run = function (message) {
     if (this.opts.argsArg) cmdargs.push(message.args);
 
     // run
-    else try {
+    try {
       command.run.call(this, ...cmdargs);
     } catch (err) {
       this.log("command", cmd, "UNHANDLED EXCEPTION", "logging stack trace...");

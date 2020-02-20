@@ -60,21 +60,30 @@ function allCommands(message) {
     .setColor(this.opts.color)
   ;
 
-  if (this.cfgdb) for (let sub in this.cfgdb.get("cmdAuth.subs").value())
-    embed.addField(sub, subCommands.call(this, sub));
+  let ranks = (this.opts.perServerRanks &&
+    this.db("cmdAuth", "server", message.guild.id).get("ranks").value()) ||
+    this.db("cmdAuth", "global").get("ranks").value() ||
+    [];
+
+  for (let rank of ranks) {
+    let rankCommands = getRankCommands.call(this, rank)
+    if (rankCommands) embed.addField(rank.name, rankCommands);
+  }
 
   embed.addField(this.opts.defaultRankName, restCommands.call(this));
 
   message.channel.send(embed);
 }
 
-function subCommands(sub) {
-  // get all commands in sub
-  let subArray = this.cfgdb.get(`cmdAuth.subs.${sub}`).value();
+function getRankCommands(rank) {
+  // get all commands in rank
+  let cmdArray = rank.commands || [];
   let desc = "";
-  // for all commands in sub
-  for (let cmd of [...this.commands].map(x => x[1]).filter(x => subArray.includes(x.opts.name))) {
+
+  // for all commands in rank
+  for (let cmd of [...this.commands].map(x => x[1]).filter(x => cmdArray.includes(x.opts.name))) {
     desc += "- `" + this.opts.prefix + cmd.opts.name;
+
     for (let arg in cmd.opts.args) {
       if (this.opts.fullSyntaxError)
         desc += " <" + arg + ": " + cmd.opts.args[arg] + ">";
@@ -84,20 +93,24 @@ function subCommands(sub) {
         else
           desc += " <" + arg + ">";
     }
+
     desc += "`\n";
   }
   return desc;
 }
 
 function restCommands() {
-  let allSubCommands = [];
-  let subs = this.cfgdb.get("cmdAuth.subs").value();
-  if (this.cfgdb) for (let sub in subs) {
-    allSubCommands.push(...subs[sub]);
+  let allRankCommands = new Set();
+  let ranks = (this.opts.perServerRanks &&
+    this.db("cmdAuth", "server", message.guild.id).get("ranks").value()) ||
+    this.db("cmdAuth", "global").get("ranks").value() ||
+    [];
+  for (let rank of ranks) {
+    if (rank.commands) rank.commands.forEach(c => allRankCommands.add(c));
   }
   // for all commands not in any subs
   let desc = "";
-  for (let cmd of [...this.commands].map(x => x[1]).filter(x => !allSubCommands.includes(x.opts.name))) {
+  for (let cmd of [...this.commands].map(x => x[1]).filter(x => !allRankCommands.has(x.opts.name))) {
     desc += "- `" + this.opts.prefix + cmd.opts.name;
     for (let arg in cmd.opts.args) {
       if (this.opts.fullSyntaxError)
