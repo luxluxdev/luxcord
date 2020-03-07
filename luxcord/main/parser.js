@@ -163,7 +163,3 @@ function parse(str, type, message) {
 
   return str;
 }
-
-function findBy(collection, str, v) {
-  return collection.find(x => (x[v] && x[v].toLowerCase()) == str.toLowerCase()) || undefined;
-}

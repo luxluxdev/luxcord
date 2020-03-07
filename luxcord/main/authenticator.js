@@ -19,7 +19,7 @@ exports.run = function (command, message) {
       cmdRanks.push(rank.name);
 
     if (userHasRank(message, rank))
-      userRanks.push(rank.name, ...rank.inherit);
+      userRanks.push(rank.name, ...(rank.inherit || []));
   }
 
   // check for nested inherits
