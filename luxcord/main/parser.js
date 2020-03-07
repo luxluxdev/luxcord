@@ -84,6 +84,10 @@ function parseArgs(message, types) {
   message.args[nameArray[i]] = uargs.join(" ");
 }
 
+function findBy(collection, str, v) {
+  return collection.find(x => (x[v] && x[v].trim().toLowerCase()) == str.trim().toLowerCase()) || undefined;
+}
+
 function parse(str, type, message) {
   let a = ["any", "string", "number", "int", "user", "member", "channel", "guild", "role"];
   if (!a.includes(type)) return str;

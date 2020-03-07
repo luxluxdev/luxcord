@@ -24,7 +24,7 @@ exports.run = function (command, message) {
 
   // check for nested inherits
   if (this.opts.checkNestedInherits) {
-    (function findNestedInherits () {
+    (function findNestedInherits() {
       let update = []; // nested inherits to later add to userRanks
   
       // for each userRank
