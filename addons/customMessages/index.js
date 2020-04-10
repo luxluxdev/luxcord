@@ -78,7 +78,7 @@ exports.run = function () {
       let {hexcolor, embed} = message.args;
       if (!/#?[a-fA-F0-9]{6}/.test(hexcolor)) return message.channel.embed("Error", "Make sure to use a hex color such as `#ff99ee`");
       if (hexcolor.startsWith("#")) hexcolor = hexcolor.slice(1);
-      message.channel.embedcolor(hextoint(hexcolor), ...embed.split("|"));
+      message.channel.embedcolor(parseInt(hexcolor, 16), ...embed.split("|"));
     }
   );
 
@@ -98,12 +98,7 @@ exports.run = function () {
       let {channel, hexcolor, embed} = message.args;
       if (!/#?[a-fA-F0-9]{6}/.test(hexcolor)) return message.channel.embed("Error", "Make sure to use a hex color such as `#ff99ee`");
       if (hexcolor.startsWith("#")) hexcolor = hexcolor.slice(1);
-      channel.embedcolor(hextoint(hexcolor), ...embed.split("|"));
+      channel.embedcolor(parseInt(hexcolor, 16), ...embed.split("|"));
     }
   );
-}
-
-function hextoint(rrggbb) {
-    var bbggrr = rrggbb.substr(4, 2) + rrggbb.substr(2, 2) + rrggbb.substr(0, 2);
-    return parseInt(bbggrr, 16);
 }
