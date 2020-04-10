@@ -71,7 +71,7 @@ exports.run = function () {
         embed: "string+"
       },
       desc: "Send a custom embed with custom color strip\nembed: [title] | [desc] | [img url] | [footer]",
-      example: "Welcome! | Enjoy your stay :) | | At your service!"
+      example: "#ff99ee Welcome! | Enjoy :) | | At your service!"
     },
 
     function (message) {
@@ -84,14 +84,14 @@ exports.run = function () {
 
   this.cmd(
     {
-      name: "embedcolor",
+      name: "embedcolorch",
       args: {
         channel: "channel",
         hexcolor: "string",
         embed: "string+"
       },
       desc: "Send a custom embed with custom color strip to a channel\nembed: [title] | [desc] | [img url] | [footer]",
-      example: "Welcome! | Enjoy your stay :) | | At your service!"
+      example: "#general #ff99ee Welcome! | Enjoy :) | | <3"
     },
 
     function (message) {

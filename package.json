@@ -1,6 +1,6 @@
 {
   "name": "luxcord",
-  "version": "1.0.34",
+  "version": "1.0.35",
   "description": "An elegant discord.js framework",
   "main": "luxcord.js",
   "scripts": {
