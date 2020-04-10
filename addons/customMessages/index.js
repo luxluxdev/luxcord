@@ -62,4 +62,48 @@ exports.run = function () {
       message.args.channel.embed(...embed.split("|"));
     }
   );
+
+  this.cmd(
+    {
+      name: "embedcolor",
+      args: {
+        hexcolor: "string",
+        embed: "string+"
+      },
+      desc: "Send a custom embed with custom color strip\nembed: [title] | [desc] | [img url] | [footer]",
+      example: "Welcome! | Enjoy your stay :) | | At your service!"
+    },
+
+    function (message) {
+      let {hexcolor, embed} = message.args;
+      if (!/#?[a-fA-F0-9]{6}/.test(hexcolor)) return message.channel.embed("Error", "Make sure to use a hex color such as `#ff99ee`");
+      if (hexcolor.startsWith("#")) hexcolor = hexcolor.slice(1);
+      message.channel.embedcolor(hextoint(hexcolor), ...embed.split("|"));
+    }
+  );
+
+  this.cmd(
+    {
+      name: "embedcolor",
+      args: {
+        channel: "channel",
+        hexcolor: "string",
+        embed: "string+"
+      },
+      desc: "Send a custom embed with custom color strip to a channel\nembed: [title] | [desc] | [img url] | [footer]",
+      example: "Welcome! | Enjoy your stay :) | | At your service!"
+    },
+
+    function (message) {
+      let {channel, hexcolor, embed} = message.args;
+      if (!/#?[a-fA-F0-9]{6}/.test(hexcolor)) return message.channel.embed("Error", "Make sure to use a hex color such as `#ff99ee`");
+      if (hexcolor.startsWith("#")) hexcolor = hexcolor.slice(1);
+      channel.embedcolor(hextoint(hexcolor), ...embed.split("|"));
+    }
+  );
+}
+
+function hextoint(rrggbb) {
+    var bbggrr = rrggbb.substr(4, 2) + rrggbb.substr(2, 2) + rrggbb.substr(0, 2);
+    return parseInt(bbggrr, 16);
 }

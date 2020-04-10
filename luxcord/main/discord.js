@@ -122,13 +122,39 @@ exports.run = (client) => {
   }
   
   const protoembed = object => object.prototype.embed = embed;
+
+  // client.embedcolor
+  client.embedcolor = (color, title, description, image, footer, timestamp, thumbnail) => {
+    return {embed: {
+      title: title,
+      description: description,
+      image: {url: image},
+      footer: {text: footer},
+      timestamp: timestamp,
+      thumbnail: {url: thumbnail},
+      color: color
+    }}
+  }
+
+  // message.editEmbedColor
+  Discord.Message.prototype.editEmbedColor = function (...embedParams) {
+    return new Promise((resolve, reject) => {
+      this.edit(client.embedcolor(...embedParams))
+      .then(msg => resolve(msg))
+      .catch(err => reject(err));
+    });
+  }
   
-  const discordobjects = [
-    Discord.TextChannel,
-    Discord.DMChannel,
-    Discord.User,
-    Discord.GuildMember
-  ];
+  // template embedcolor promise function
+  const embedcolor = function (...embedParams) {
+    return new Promise((resolve, reject) => {
+      this.send(client.embedcolor(...embedParams))
+      .then(msg => resolve(msg))
+      .catch(err => reject(err));
+    });
+  }
   
-  discordobjects.forEach(x => protoembed(x));
+  const protoembedcolor = object => object.prototype.embed = embedcolor;
+  
+  discordobjects.forEach(x => {protoembed(x); protoembedcolor(x)});
 }
