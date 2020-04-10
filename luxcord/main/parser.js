@@ -92,12 +92,22 @@ function parse(str, type, message) {
   let a = ["any", "string", "number", "int", "user", "member", "channel", "guild", "role"];
   if (!a.includes(type)) return str;
 
-  // any string number int
+  // any or string
   switch (type) {
     case "any": return str;
     case "string": return str;
-    case "number": return +str || Number(str) || parseFloat(str) || undefined;
-    case "int": return parseInt(str) || undefined;
+  }
+  
+  // number
+  if (type === "number") {
+    if (str === "0") return 0.0;
+    return +str || Number(str) || parseFloat(str) || undefined;
+  }
+  
+  // int
+  if (type === "int") {
+    if (str === "0") return 0;
+    return parseInt(str) || undefined;
   }
 
   // user

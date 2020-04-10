@@ -21,7 +21,7 @@ exports.run = function () {
         embed: "string+"
       },
       desc: "Send a custom embed!\nembed: [title] | [desc] | [img url] | [footer]",
-      example: "Welcome! | Enjoy your stay :) | | At your service! :D"
+      example: "Welcome! | Enjoy your stay :) | | At your service!"
     },
 
     function (message) {
