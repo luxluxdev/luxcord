@@ -154,7 +154,7 @@ exports.run = (client) => {
     });
   }
   
-  const protoembedcolor = object => object.prototype.embed = embedcolor;
+  const protoembedcolor = object => object.prototype.embedcolor = embedcolor;
 
   const discordobjects = [
     Discord.TextChannel,
