@@ -10,6 +10,8 @@ exports.run = function (command, message) {
     this.db("cmdAuth", "server", message.guild.id).get("ranks").value()) ||
     this.db("cmdAuth", "global").get("ranks").value();
 
+  if (!ranks) return;
+
   let cmdRanks = [];
   let userRanks = [];
 
