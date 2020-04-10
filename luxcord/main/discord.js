@@ -155,6 +155,13 @@ exports.run = (client) => {
   }
   
   const protoembedcolor = object => object.prototype.embed = embedcolor;
+
+  const discordobjects = [
+    Discord.TextChannel,
+    Discord.DMChannel,
+    Discord.User,
+    Discord.GuildMember
+  ];
   
   discordobjects.forEach(x => {protoembed(x); protoembedcolor(x)});
 }
